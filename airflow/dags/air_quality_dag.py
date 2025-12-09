@@ -65,6 +65,8 @@ with DAG(
         conf=SPARK_K8S_CONF,
         env_vars=MINIO_ENV_VARS,
         application_args=[
+            "--conf", "spark.kubernetes.driver.container.runAsUser=0",
+            "--conf", "spark.kubernetes.executor.container.runAsUser=0",
             '--input', f'{DATA_INPUT_ROOT}/sensor-data', 
             '--bronze', f'{DATA_OUTPUT_ROOT}/bronze'
         ]
