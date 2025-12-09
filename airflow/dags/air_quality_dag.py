@@ -28,6 +28,9 @@ SPARK_K8S_CONF = {
     "spark.hadoop.fs.s3a.connection.ssl.enabled": "false",
     
     "spark.hadoop.fs.s3a.endpoint": "https://cuong-dev.cloud:9000", 
+    "spark.kubernetes.driver.container.runAsUser": "0",
+    "spark.kubernetes.executor.container.runAsUser": "0",
+
 }
 
 MINIO_ENV_VARS = {

@@ -7,8 +7,12 @@ airflow:
   images:
     airflow:
       repository: custom-airflow
-      tag: latest
+      tag: v2
       pullPolicy: Never
+
+  env:
+    - name: AIRFLOW_CONN_SPARK_DEFAULT
+      value: '{"conn_type": "spark", "host": "k8s://https://kubernetes.default.svc.cluster.local:443", "extra": {"deploy-mode": "cluster"}}'
 
   serviceAccount:
     create: true
