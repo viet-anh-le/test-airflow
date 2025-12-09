@@ -1,0 +1,5 @@
+__pycache__/
+docs/
+nqd_notebook/
+
+spark-3.5.0-bin-hadoop3.tgz

@@ -1,0 +1,26 @@
+FROM apache/airflow:3.0.6
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jre-headless procps && \
+    apt-get clean
+
+ENV SPARK_VERSION=3.5.0
+
+COPY spark-3.5.0-bin-hadoop3.tgz /tmp/spark.tgz
+
+RUN tar xvf /tmp/spark.tgz -C /opt && \
+    mv /opt/spark-${SPARK_VERSION}-bin-hadoop3 /opt/spark && \
+    rm /tmp/spark.tgz
+
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$SPARK_HOME/bin
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+USER airflow
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir pyspark==3.5.0
+RUN pip install --no-cache-dir \
+    apache-airflow-providers-apache-spark \
+    delta-spark==3.0.0
