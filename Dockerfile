@@ -9,4 +9,4 @@ WORKDIR /app
 COPY batch /app/batch
 COPY batch.zip /app/batch.zip
 
-USER root
+RUN chmod -R 777 /opt/spark
