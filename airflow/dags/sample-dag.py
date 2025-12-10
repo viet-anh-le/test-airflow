@@ -27,7 +27,7 @@ with DAG(
        task_id='n-spark-pi',
        trigger_rule="all_success",
        depends_on_past=False,
-       retries=3,
+       retries=0,
        application_file="new-spark-pi.yaml",
        namespace="spark-jobs",
        kubernetes_conn_id="myk8s",
