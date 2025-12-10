@@ -9,4 +9,8 @@ WORKDIR /app
 COPY batch /app/batch
 COPY batch.zip /app/batch.zip
 
-RUN chmod -R 777 /opt/spark
+RUN chmod a+rwx /opt
+RUN chown -R 185:0 /opt/spark /opt/spark/work-dir /app \
+    && chmod -R g+w /opt/spark /opt/spark/work-dir /app
+
+USER 185

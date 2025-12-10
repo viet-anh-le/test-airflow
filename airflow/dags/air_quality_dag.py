@@ -27,10 +27,7 @@ SPARK_K8S_CONF = {
     "spark.hadoop.fs.s3a.path.style.access": "true",
     "spark.hadoop.fs.s3a.connection.ssl.enabled": "false",
     
-    "spark.hadoop.fs.s3a.endpoint": "https://cuong-dev.cloud:9000", 
-    "spark.kubernetes.driver.container.runAsUser": "0",
-    "spark.kubernetes.executor.container.runAsUser": "0",
-
+    "spark.hadoop.fs.s3a.endpoint": "https://cuong-dev.cloud:9000",
 }
 
 MINIO_ENV_VARS = {
@@ -49,7 +46,7 @@ default_args = {
 with DAG(
     'air_quality_pipeline_k8s',
     default_args=default_args,
-    description='Pipeline chạy Spark trên Kubernetes (Explicit Tasks)',
+    description='Pipeline chạy Spark trên Kubernetes',
     schedule='@daily',
     start_date=datetime(2023, 10, 1),
     catchup=False,
