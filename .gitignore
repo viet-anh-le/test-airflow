@@ -3,3 +3,4 @@ docs/
 nqd_notebook/
 
 spark-3.5.0-bin-hadoop3.tgz
+spark-operator-2.4.0.tgz
