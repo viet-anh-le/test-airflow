@@ -1,39 +1,41 @@
-airflow:
-  defaultAirflowTag: "3.0.6"
-  airflowVersion: "3.0.6"
+executor: KubernetesExecutor
 
-  executor: KubernetesExecutor
-
-  images:
-    airflow:
-      repository: custom-airflow
-      tag: v2
-      pullPolicy: Never
-
-  env:
-    - name: AIRFLOW_CONN_SPARK_DEFAULT
-      value: '{"conn_type": "spark", "host": "k8s://https://kubernetes.default.svc.cluster.local:443", "extra": {"deploy-mode": "cluster"}}'
-
-  serviceAccount:
-    create: true
-    name: "airflow-worker"
-  dags:
-    gitSync:
-      enabled: true
-      repo: "https://github.com/viet-anh-le/test-airflow.git"
-      branch: "main"
-      depth: 1
-      wait: 60
-      subPath: "airflow/dags"
-  postgresql:
+dags:
+  persistence:
+    enabled: false
+  gitSync:
     enabled: true
-    image:
-      repository: bitnamilegacy/postgresql
-      tag: "13.2.0"
-  config:
-    core:
-      parallelism: 4
-      max_active_tasks_per_dag: 4
-      dag_concurrency: 4
-    logging:
-      remote_logging: "False"
+    repo: "https://github.com/viet-anh-le/test-airflow.git"
+    branch: "main"
+    rev: HEAD
+    depth: 1
+    wait: 60
+    subPath: "airflow/dags"
+    containerName: "git-sync"
+    sshKeySecret: "airflow-git-ssh-key-secret"
+postgresql:
+  enabled: true
+  image:
+    repository: bitnamilegacy/postgresql
+    tag: "13.2.0"
+    auth:
+      enablePostgresUser: true
+config:
+  core:
+    parallelism: 4
+    max_active_tasks_per_dag: 4
+    dag_concurrency: 4
+  logging:
+    remote_logging: "False"
+redis:
+  enabled: false
+ingress:
+  enabled: true
+  web:
+    enabled: true
+    host: "airflow.nsa2.com"
+    ingressClassName: "nginx"
+triggerer:
+  replicas: 2
+  persistence:
+    size: 5Gi

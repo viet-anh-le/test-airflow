@@ -1,0 +1,5 @@
+spark:
+  jobNamespaces:
+    - spark-jobs
+    - airflow
+    - default
